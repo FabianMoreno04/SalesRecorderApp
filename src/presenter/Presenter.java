@@ -10,17 +10,20 @@ public class Presenter {
     private Products products;
     private Suppliers suppliers;
     private Category category;
+    private RegisterSales registerSales;
     private View view;
 	static final String CUSTOMERS = "./data/customers.txt";
 	static final String PRODUCTS = "./data/products.txt";
 	static final String SUPPLIERS = "./data/suppliers.txt";
 	static final String CATEGORIES = "./data/categories.txt";
+	static final String BILLS = "./data/bills.txt";
 
     public Presenter() {
         customers = new Customers(null,null,null,null);
         suppliers = new Suppliers(null,null,null,null,null);
         products = new Products(0, null, null, null);
         category = new Category(0, null, null);
+        registerSales = new RegisterSales(0, null, null, 0, 0);
         fileOperationsImpl = new FileOperationsImpl();
         view = new View();
     }
@@ -50,7 +53,7 @@ public class Presenter {
                     registerSale();
                     break;
                 case 6:
-                    Invoice();
+                    addInvoice();
                     break;
                 case 7:
                     exit();
@@ -121,14 +124,21 @@ public class Presenter {
 	}
     
 
-	private void Invoice() {
-		
+	
+	public void addInvoice(){
+			
 	}
 
-	
-	
 	private void registerSale() {
-		
+		int id = view.readInt("Codigo de la factura:");
+		String invoiceDate = view.readString("Fecha:");
+		String nameCustomer = view.readString("Nombre del cliente:");
+		int discount = view.readInt("descuento:");
+		double valueTotal = view.readDouble("Valor total:");
+		registerSales = new RegisterSales(id, invoiceDate, nameCustomer, discount, valueTotal);
+		fileOperationsImpl.write(BILLS, registerSales);
+		 view.showMessage("\n!!! FACTURA REGISTRADA!!!\n");
+
 	}
 	
 	
